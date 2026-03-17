@@ -1,0 +1,113 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@theme {
+  --color-brand-muted: #71717a;
+
+  --animate-marquee: marquee 30s linear infinite;
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+  background: #050505;
+  color: white;
+}
+
+.glass-effect {
+  background: rgba(5, 5, 5, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gradient-text {
+  background: linear-gradient(180deg, #ffffff 30%, rgba(255, 255, 255, 0.5) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.shader-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, #111 0%, #050505 100%);
+  overflow: hidden;
+  z-index: -1;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.shader-arc {
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: 50%;
+  left: -25%;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    transparent 0deg,
+    transparent 150deg,
+    #3b82f6 180deg,
+    #ef4444 210deg,
+    transparent 240deg
+  );
+  filter: blur(100px);
+  opacity: 0.15;
+  animation: rotate 20s linear infinite;
+  will-change: transform;
+}
+
+.circular-menu-trigger {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.circular-menu-trigger:hover {
+  transform: scale(1.1);
+}
+
+.sleek-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+}
+
+.sleek-input:focus {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.05);
+}
+
+.timer-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.marquee-container {
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
