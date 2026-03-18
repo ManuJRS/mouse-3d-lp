@@ -5,7 +5,7 @@ function handleLanguageChange(language: { code: string; label: string }) {
   console.log('Idioma seleccionado:', language)
 }
 
-function handleNavClick(item: { label: string; href: string }) {
+function handleNavClick(item: { key?: string; label?: string; href: string }) {
   console.log('Nav item:', item)
 }
 
