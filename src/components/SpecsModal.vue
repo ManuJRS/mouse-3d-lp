@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { tm } = useI18n()
 
 const DEFAULT_SECTIONS: Array<{ label: string; value: string; description?: string }> = [
   { label: 'Sensor', value: '30,000 DPI Optical Sensor', description: '750 IPS Tracking Speed, 70G Acceleration' },
@@ -63,7 +66,7 @@ function handleOverlayClick() {
             <div class="mb-10 flex items-start justify-between">
               <div>
                 <span
-                  class="mb-2 block text-[10px] font-bold uppercase tracking-[0.4em] text-blue-500"
+                  class="mb-2 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#003366]"
                 >
                   {{ subtitle }}
                 </span>
@@ -129,7 +132,7 @@ function handleOverlayClick() {
                 class="rounded-sm bg-white px-8 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-black hover:cursor-pointer "
                 @click="closeModal"
               >
-                Close Details
+                {{ tm('btnModal.text') }}
               </button>
             </div>
           </div>
