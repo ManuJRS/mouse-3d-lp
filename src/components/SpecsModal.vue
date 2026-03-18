@@ -74,7 +74,7 @@ function handleOverlayClick() {
 
               <button
                 type="button"
-                class="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-colors hover:bg-white/10"
+                class="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-colors hover:bg-white/10 hover:cursor-pointer"
                 @click="closeModal"
               >
                 <span class="material-symbols-outlined">close</span>
@@ -126,7 +126,7 @@ function handleOverlayClick() {
             <div class="mt-12 flex justify-end border-t border-white/5 pt-8">
               <button
                 type="button"
-                class="rounded-sm bg-white px-8 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-dark"
+                class="rounded-sm bg-white px-8 py-3 text-[10px] font-bold uppercase tracking-[0.2em] text-black hover:cursor-pointer "
                 @click="closeModal"
               >
                 Close Details
