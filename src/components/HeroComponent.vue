@@ -42,7 +42,8 @@ function handlePhilosophy() {
       <div class="flex flex-col items-center justify-center gap-6 sm:flex-row">
         <button
           type="button"
-          class="w-full rounded-sm bg-white px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] text-black hover:cursor-pointer transition-all hover:bg-neutral-200 sm:w-auto"
+          disabled
+          class="w-full rounded-sm bg-white px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] text-black transition-all sm:w-auto opacity-60 cursor-not-allowed"
           @click="handleShopCollection"
         >
           {{ t('hero.primaryButtonText') }}
@@ -50,7 +51,8 @@ function handlePhilosophy() {
 
         <button
           type="button"
-          class="w-full rounded-sm border border-white/10 px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all hover:bg-white/5 sm:w-auto hover:cursor-pointer"
+          disabled
+          class="w-full rounded-sm border border-white/10 px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all sm:w-auto opacity-60 cursor-not-allowed"
           @click="handlePhilosophy"
         >
           {{ t('hero.secondaryButtonText') }}
