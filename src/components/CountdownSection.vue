@@ -1,18 +1,32 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { tm } = useI18n()
 
 const props = withDefaults(
   defineProps<{
-    eyebrow?: string
-    title?: string
     daysFromNow?: number
   }>(),
-  {
-    eyebrow: 'Event Horizon',
-    title: 'Launch Impending.',
-    daysFromNow: 8,
-  },
+  { daysFromNow: 8 },
 )
+
+const countdownSection = computed(() => {
+  const raw = tm('countdownSection') as
+    | { eyebrow?: string; title?: string; labels?: Record<string, string> }
+    | undefined
+  const labels = raw?.labels ?? {}
+  return {
+    eyebrow: raw?.eyebrow ?? '',
+    title: raw?.title ?? '',
+    labels: {
+      days: labels.days ?? 'Days',
+      hours: labels.hours ?? 'Hours',
+      minutes: labels.minutes ?? 'Minutes',
+      seconds: labels.seconds ?? 'Seconds',
+    },
+  }
+})
 
 const timeLeft = ref({
   days: '00',
@@ -21,12 +35,15 @@ const timeLeft = ref({
   seconds: '00',
 })
 
-const cards = computed(() => [
-  { label: 'Days', value: timeLeft.value.days },
-  { label: 'Hours', value: timeLeft.value.hours },
-  { label: 'Minutes', value: timeLeft.value.minutes },
-  { label: 'Seconds', value: timeLeft.value.seconds },
-])
+const cards = computed(() => {
+  const section = countdownSection.value
+  return [
+    { label: section.labels.days, value: timeLeft.value.days },
+    { label: section.labels.hours, value: timeLeft.value.hours },
+    { label: section.labels.minutes, value: timeLeft.value.minutes },
+    { label: section.labels.seconds, value: timeLeft.value.seconds },
+  ]
+})
 
 let intervalId: number | undefined
 
@@ -85,16 +102,16 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section class="overflow-hidden border-t border-white/5 bg-brand-dark py-24">
+  <section class="overflow-hidden border-t border-white/5 bg-brand-dark py-20">
     <div class="mx-auto max-w-7xl px-6 text-center">
       <span
         class="mb-6 block text-[10px] font-bold uppercase tracking-[0.4em] text-blue-500"
       >
-        {{ eyebrow }}
+        {{ countdownSection.eyebrow }}
       </span>
 
       <h2 class="gradient-text mb-16 text-4xl font-bold tracking-tight md:text-5xl">
-        {{ title }}
+        {{ countdownSection.title }}
       </h2>
 
       <div class="mx-auto grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-4 md:gap-8">
