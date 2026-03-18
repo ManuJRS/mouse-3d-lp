@@ -136,10 +136,11 @@ onBeforeUnmount(() => {
             class="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium transition-all hover:bg-white/10 hover:cursor-pointer"
             @click.stop="toggleLanguageMenu"
           >
-            <span class="material-symbols-outlined text-sm">language</span>
+            <span class="material-symbols-outlined notranslate text-sm" translate="no">language</span>
             <span>{{ currentLangLabel }}</span>
             <span
-              class="material-symbols-outlined text-xs transition-transform duration-200"
+              class="material-symbols-outlined notranslate text-xs transition-transform duration-200"
+              translate="no"
               :class="{ 'rotate-180': isLanguageMenuOpen }"
             >
               expand_more

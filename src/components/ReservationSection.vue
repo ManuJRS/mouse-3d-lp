@@ -172,7 +172,8 @@ function handleSubmit() {
                 </select>
 
                 <span
-                  class="material-symbols-outlined pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-brand-muted"
+                  class="material-symbols-outlined notranslate pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-brand-muted"
+                  translate="no"
                 >
                   expand_more
                 </span>

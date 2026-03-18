@@ -160,7 +160,7 @@ function handleSpecsClick() {
             class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition hover:bg-white hover:text-black hover:cursor-pointer"
             @click="prevSlide"
           >
-            <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+            <span class="material-symbols-outlined notranslate text-[20px]" translate="no">arrow_back</span>
           </button>
 
           <button
@@ -168,7 +168,7 @@ function handleSpecsClick() {
             class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition hover:bg-white hover:text-black hover:cursor-pointer"
             @click="nextSlide"
           >
-            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+            <span class="material-symbols-outlined notranslate text-[20px]" translate="no">arrow_forward</span>
           </button>
         </div>
 
@@ -223,7 +223,8 @@ function handleSpecsClick() {
             >
               <span>{{ currentSlide.buttonText }}</span>
               <span
-                class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1"
+                class="material-symbols-outlined notranslate text-sm transition-transform group-hover:translate-x-1"
+                translate="no"
               >
                 arrow_forward
               </span>
