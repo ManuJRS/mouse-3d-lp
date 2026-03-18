@@ -34,7 +34,7 @@ export default {
               'エルゴノミックフロー形状',
             ],
             buttonText: 'デザインを見る',
-            modelSrc: 'futuristic_gaming_mouse.glb',
+            modelSrc: 'futuristic_gaming_mouse-v1-reduced.glb',
             modelAlt: 'Aura Air 3Dモデル',
             specs: {
               title: 'Aura Air',
@@ -116,7 +116,7 @@ export default {
               '高精度スクロールコントロール',
             ],
             buttonText: '詳細を見る',
-            modelSrc: '3d_lightweight_gaming_mouse_-_high_poly.glb',
+            modelSrc: '3d_lightweight_gaming_mouse_-_high_poly-v1.glb',
             modelAlt: 'Aura X 3Dモデル',
             specs: {
               title: 'Aura X',

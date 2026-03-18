@@ -1,13 +1,15 @@
 <script setup lang="ts">
+import { defineAsyncComponent } from 'vue'
 import HeroComponent from '@/components/HeroComponent.vue'
 import MarqueeSection from '@/components/MarqueeSection.vue'
-import ProductSlider from '@/components/ProductSlider.vue'
 import FeaturesSection from '@/components/FeaturesSection.vue'
 import CountdownSection from '@/components/CountdownSection.vue'
 import ReservationSection from '@/components/ReservationSection.vue'
 import MainFooter from '@/layout/MainFooter.vue'
 import FloatingActionMenu from '@/components/ui/FloatingActionMenu.vue'
 import type { Slide, SlideScene } from '@/components/ProductSlider.vue'
+
+const ProductSlider = defineAsyncComponent(() => import('@/components/ProductSlider.vue'))
 
 const productSlideScenes: SlideScene[] = [
   {
@@ -64,23 +66,23 @@ const productSlideScenes: SlideScene[] = [
 ]
 
 function handleShopCollection() {
-  console.log('Shop The Collection')
+  // TODO: enlace a tienda o scroll
 }
 
 function handlePhilosophy() {
-  console.log('The Philosophy')
+  // TODO: scroll a sección o enlace
 }
 
-function handleSpecs(slide: Slide) {
-  console.log('Slide actual:', slide)
+function handleSpecs(_slide: Slide) {
+  // SpecsModal se abre via v-model en el template
 }
 
-function handleReservationSubmit(payload: {
+function handleReservationSubmit(_payload: {
   name: string
   email: string
   product: string
 }) {
-  console.log('Reservation:', payload)
+  // TODO: enviar a backend o analytics
 }
 </script>
 

@@ -34,7 +34,7 @@ export default {
             'Ergonomic Flow Shape',
           ],
           buttonText: 'Explore Design',
-          modelSrc: 'futuristic_gaming_mouse.glb',
+          modelSrc: 'futuristic_gaming_mouse-v1-reduced.glb',
           modelAlt: 'Aura Air 3D Model',
           specs: {
             title: 'Aura Air',
@@ -116,7 +116,7 @@ export default {
             'Precision Scroll Control',
           ],
           buttonText: 'See Details',
-          modelSrc: '3d_lightweight_gaming_mouse_-_high_poly.glb',
+          modelSrc: '3d_lightweight_gaming_mouse_-_high_poly-v1.glb',
           modelAlt: 'Aura X 3D Model',
           specs: {
             title: 'Aura X',
