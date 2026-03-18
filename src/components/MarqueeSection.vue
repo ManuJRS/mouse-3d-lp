@@ -1,15 +1,12 @@
 <script setup lang="ts">
-interface Props {
-  items?: string[]
-}
+import { useI18n } from 'vue-i18n'
+import { computed } from 'vue'
 
-withDefaults(defineProps<Props>(), {
-  items: () => [
-    'Precision Engineered',
-    'Uncompromising Quality',
-    'Elite Hardware',
-    'Future of Gaming',
-  ],
+const { tm } = useI18n()
+
+const items = computed(() => {
+  const raw = tm('marquee.items')
+  return Array.isArray(raw) ? (raw as string[]) : []
 })
 </script>
 
