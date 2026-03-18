@@ -2,7 +2,10 @@
 import { TresCanvas } from '@tresjs/core'
 import { OrbitControls, useGLTF } from '@tresjs/cientos'
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import SpecsModal from './SpecsModal.vue'
+
+const { tm } = useI18n()
 
 export type SceneConfig = {
   cameraPosition?: [number, number, number]
@@ -47,152 +50,43 @@ export type SlideSpecs = {
   sections?: SpecsSection[]
 }
 
-type Slide = {
+export type Slide = {
   id: number
   eyebrow: string
   title: string
   description: string
   features: string[]
   buttonText: string
-  /** Ruta pública (/models/...) o nombre de archivo en src/assets/models/ (ej: gaming_mouse.glb) */
   modelSrc: string
   modelAlt: string
-  /** Configuración 3D opcional para este slide (cámara, luces, orbit) */
   scene?: SceneConfig
-  /** Contenido del modal de especificaciones (title, subtitle, sections). Si no se define, se usan los valores por defecto del modal. */
   specs?: SlideSpecs
+}
+
+/** Solo id + scene para inyectar configuración 3D por slide (el contenido viene de i18n). */
+export type SlideScene = {
+  id: number
+  scene?: SceneConfig
 }
 
 const props = withDefaults(
   defineProps<{
-    slides?: Slide[]
+    slideScenes?: SlideScene[]
   }>(),
-  {
-    slides: () => [
-      {
-        id: 2,
-        scene: {
-            cameraPosition: [0, 3, 2.3],
-            ambientIntensity: 0.5,
-            directionalLights: [
-                { position: [2, 2, 2], intensity: 1.2 },
-                { position: [-2, -1, 3], intensity: 0.4 },
-            ],
-            orbit: {
-                enableDamping: true,
-            },
-            autoRotate: true,
-            autoRotateSpeed: 0.9,
-            enableDamping: true,
-            dampingFactor: 0.05,
-        },
-        eyebrow: 'Minimalist Design',
-        title: 'The Aura Air.\nLightness redefined.',
-        description:
-          'Built for players who want speed without compromise. Every curve, every material, and every gram has been refined to deliver effortless movement and absolute control.',
-        features: [
-          'Featherweight Ergonomic Shell',
-          'Low-latency Wireless Response',
-          'Precision Grip Texture',
-        ],
-        buttonText: 'Explore Design',
-        modelSrc: 'futuristic_gaming_mouse.glb',
-        modelAlt: 'Aura Air 3D Model',
-        specs: {
-          title: 'Aura Air',
-          subtitle: 'Design & Ergonomics',
-          sections: [
-            { label: 'Shell', value: 'Featherweight Ergonomic', description: 'Optimized for claw and fingertip grip' },
-            { label: 'Wireless', value: 'Low-latency 2.4GHz', description: 'Sub-1ms response time' },
-            { label: 'Grip', value: 'Precision Texture', description: 'PTFE feet, 100% contact' },
-            { label: 'Weight', value: '42 Grams', description: 'Ultra-light construction' },
-          ],
-        },
-      },
-      {
-        id: 1,
-        scene: {
-            cameraPosition: [15, 12, 12],
-            ambientIntensity: 1,
-            directionalLights: [
-                { position: [2, 2, 2], intensity: 1.2 },
-                { position: [-2, -1, 3], intensity: 0.4 },
-            ],
-            orbit: {
-                enableDamping: true,
-            },
-            autoRotate: true,
-            autoRotateSpeed: 7.5,
-            enableDamping: true,
-            dampingFactor: 0.05,
-        },
-        eyebrow: 'Precision Engineered',
-        title: 'The Aura Pro.\nPure performance.',
-        description:
-          "We stripped away everything that doesn't help you win. No bloated software, no distracting lights—just raw, unadulterated performance wrapped in a shell that weighs less than 50 grams.",
-        features: [
-          'Ultra-lightweight 48g Chassis',
-          '30K DPI Optical Sensor',
-          '150-hour Battery Life',
-        ],
-        buttonText: 'View Specifications',
-        modelSrc: 'mouse_gamer.glb',
-        modelAlt: 'Aura Pro 3D Model',
-        specs: {
-          title: 'Aura Pro Wireless',
-          subtitle: 'Technical Data',
-          sections: [
-            { label: 'Sensor', value: '30,000 DPI Optical Sensor', description: '750 IPS Tracking Speed, 70G Acceleration' },
-            { label: 'Weight', value: '48 Grams', description: 'Ultra-lightweight magnesium alloy chassis' },
-            { label: 'Connectivity', value: 'AuraSync 2.4GHz / Wired', description: '0.125ms Latency performance' },
-            { label: 'Battery Life', value: 'Up to 150 Hours', description: 'USB-C Fast charging supported' },
-            { label: 'Switches', value: 'Gen-3 Optical Switches', description: '90-million click lifecycle' },
-            { label: 'Dimensions', value: '124 x 64 x 38 mm', description: 'Optimized for claw and fingertip grip' },
-          ],
-        },
-      },
-      {
-        id: 3,
-        scene: {
-            cameraPosition: [0, 1.5, 1],
-            ambientIntensity: 1.5,
-            directionalLights: [
-                { position: [2, 2, 2], intensity: 1.9},
-                { position: [-2, -1, 3], intensity: 0.4 },
-            ],
-            orbit: {
-                enableDamping: true,
-            },
-            autoRotate: true,
-            autoRotateSpeed: 0.9,
-            enableDamping: true,
-            dampingFactor: 0.05,
-        },
-        eyebrow: 'Elite Hardware',
-        title: 'The Aura X.\nMade for mastery.',
-        description:
-          'A premium gaming tool engineered for professionals. Fast, responsive, and distraction-free, with a hardware-first philosophy that keeps you focused on performance.',
-        features: [
-          'Tournament-grade Switches',
-          'Custom Sensor Tuning',
-          'Extended Battery Efficiency',
-        ],
-        buttonText: 'See Details',
-        modelSrc: '3d_lightweight_gaming_mouse_-_high_poly.glb',
-        modelAlt: 'Aura X 3D Model',
-        specs: {
-          title: 'Aura X',
-          subtitle: 'Elite Hardware',
-          sections: [
-            { label: 'Switches', value: 'Tournament-grade Optical', description: '90M click lifecycle' },
-            { label: 'Sensor', value: 'Custom Tuning', description: 'Pro-grade DPI steps' },
-            { label: 'Battery', value: 'Extended Efficiency', description: 'Up to 120 hours' },
-          ],
-        },
-      },
-    ],
-  },
+  { slideScenes: () => [] },
 )
+
+const slides = computed<Slide[]>(() => {
+  const raw = tm('productSlider.slides')
+  const list = Array.isArray(raw) ? (raw as Omit<Slide, 'scene'>[]) : []
+  const sceneById = new Map(
+    (props.slideScenes ?? []).map((s) => [s.id, s.scene]),
+  )
+  return list.map((slide) => ({
+    ...slide,
+    scene: sceneById.get(slide.id),
+  }))
+})
 
 const emit = defineEmits<{
   specsClick: [slide: Slide]
@@ -201,7 +95,7 @@ const emit = defineEmits<{
 const currentIndex = ref(0)
 const specsModalOpen = ref(false)
 
-const currentSlide = computed(() => props.slides[currentIndex.value])
+const currentSlide = computed(() => slides.value[currentIndex.value])
 
 const modelUrl = computed(() => {
   const src = currentSlide.value?.modelSrc ?? ''
@@ -235,12 +129,12 @@ const sceneConfig = computed(() => {
 
 function nextSlide() {
   currentIndex.value =
-    currentIndex.value === props.slides.length - 1 ? 0 : currentIndex.value + 1
+    currentIndex.value === slides.value.length - 1 ? 0 : currentIndex.value + 1
 }
 
 function prevSlide() {
   currentIndex.value =
-    currentIndex.value === 0 ? props.slides.length - 1 : currentIndex.value - 1
+    currentIndex.value === 0 ? slides.value.length - 1 : currentIndex.value - 1
 }
 
 function goToSlide(index: number) {
@@ -263,7 +157,7 @@ function handleSpecsClick() {
         <div class="flex items-center gap-3">
           <button
             type="button"
-            class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition hover:bg-white hover:text-black"
+            class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition hover:bg-white hover:text-black hover:cursor-pointer"
             @click="prevSlide"
           >
             <span class="material-symbols-outlined text-[20px]">arrow_back</span>
@@ -271,7 +165,7 @@ function handleSpecsClick() {
 
           <button
             type="button"
-            class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition hover:bg-white hover:text-black"
+            class="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-white transition hover:bg-white hover:text-black hover:cursor-pointer"
             @click="nextSlide"
           >
             <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
@@ -339,7 +233,7 @@ function handleSpecsClick() {
           <div class="relative w-full lg:w-1/2">
             <div
               :key="currentSlide.id"
-              class="relative z-10 h-[700px] overflow-hidden rounded-[2.5rem]"
+              class="relative z-10 md:h-[700px] h-[300px] overflow-hidden rounded-[2.5rem]"
             >
               <TresCanvas clear-color="#050505">
                 <TresPerspectiveCamera :position="sceneConfig.cameraPosition" />
@@ -359,13 +253,6 @@ function handleSpecsClick() {
                 />
               </TresCanvas>
             </div>
-
-            <div
-              class="absolute top-10 -right-10 h-full w-full rounded-[2.5rem] border border-white/5 bg-[#111] opacity-50 -z-10"
-            ></div>
-            <div
-              class="absolute -bottom-10 -left-10 h-full w-full rounded-[2.5rem] border border-white/5 bg-[#0a0a0a] opacity-30 -z-20"
-            ></div>
           </div>
         </div>
       </Transition>

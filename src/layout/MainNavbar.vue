@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 type NavItem = {
   label: string
@@ -11,12 +12,13 @@ type LanguageItem = {
   label: string
 }
 
+const { locale } = useI18n()
+
 const props = withDefaults(
   defineProps<{
     brand?: string
     navItems?: NavItem[]
     languages?: LanguageItem[]
-    currentLanguage?: string
   }>(),
   {
     brand: 'AURA',
@@ -27,11 +29,9 @@ const props = withDefaults(
       { label: 'Ecosystem', href: '#' },
     ],
     languages: () => [
-      { code: 'EN', label: 'English' },
-      { code: 'ES', label: 'Español' },
-      { code: 'JP', label: '日本語' },
+      { code: 'en', label: 'English' },
+      { code: 'ja', label: '日本語' },
     ],
-    currentLanguage: 'EN',
   },
 )
 
@@ -42,7 +42,11 @@ const emit = defineEmits<{
 }>()
 
 const isLanguageMenuOpen = ref(false)
-const currentLang = ref(props.currentLanguage)
+
+const currentLangLabel = computed(() => {
+  const lang = props.languages.find((l) => l.code === locale.value)
+  return lang?.label ?? locale.value.toUpperCase()
+})
 
 function toggleLanguageMenu() {
   isLanguageMenuOpen.value = !isLanguageMenuOpen.value
@@ -53,7 +57,8 @@ function closeLanguageMenu() {
 }
 
 function selectLanguage(language: LanguageItem) {
-  currentLang.value = language.code
+  locale.value = language.code
+  localStorage.setItem('locale', language.code)
   emit('languageChange', language)
   closeLanguageMenu()
 }
@@ -128,11 +133,11 @@ onBeforeUnmount(() => {
         >
           <button
             type="button"
-            class="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium transition-all hover:bg-white/10"
+            class="flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium transition-all hover:bg-white/10 hover:cursor-pointer"
             @click.stop="toggleLanguageMenu"
           >
             <span class="material-symbols-outlined text-sm">language</span>
-            <span>{{ currentLang }}</span>
+            <span>{{ currentLangLabel }}</span>
             <span
               class="material-symbols-outlined text-xs transition-transform duration-200"
               :class="{ 'rotate-180': isLanguageMenuOpen }"
@@ -151,9 +156,9 @@ onBeforeUnmount(() => {
                   v-for="language in languages"
                   :key="language.code"
                   type="button"
-                  class="flex w-full items-center px-4 py-2 text-left text-[11px] font-medium transition-colors"
+                  class="flex w-full items-center px-4 py-2 text-left text-[11px] font-medium transition-colors hover:cursor-pointer"
                   :class="
-                    currentLang === language.code
+                    locale === language.code
                       ? 'justify-between text-white hover:bg-white/10'
                       : 'text-brand-muted hover:bg-white/10 hover:text-white'
                   "
@@ -162,7 +167,7 @@ onBeforeUnmount(() => {
                   <span>{{ language.label }}</span>
 
                   <span
-                    v-if="currentLang === language.code"
+                    v-if="locale === language.code"
                     class="h-1 w-1 rounded-full bg-blue-500"
                   ></span>
                 </button>

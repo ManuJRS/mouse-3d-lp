@@ -1,59 +1,42 @@
 <script setup lang="ts">
-type FeatureItem = {
+import { useI18n } from 'vue-i18n'
+import { computed } from 'vue'
+
+export type FeatureItem = {
   icon: string
   title: string
   description: string
 }
 
-const props = withDefaults(
-  defineProps<{
-    title?: string
-    description?: string
-    features?: FeatureItem[]
-  }>(),
-  {
-    title: 'Built to cover your needs',
-    description:
-      'Libero sapiente aliquam quibusdam aspernatur, praesentium iusto repellendus.',
-    features: () => [
-      {
-        icon: 'bolt',
-        title: 'Zero-Latency Flow',
-        description:
-          'Extensive customization options, allowing you to tailor every aspect to meet your specific needs.',
-      },
-      {
-        icon: 'tune',
-        title: 'You have full control',
-        description:
-          'From design elements to functionality, you have complete control to create a unique and personalized experience.',
-      },
-      {
-        icon: 'auto_awesome',
-        title: 'Powered By AI',
-        description:
-          'Elements to functionality, you have complete control to create a unique experience.',
-      },
-    ],
-  },
-)
+const { tm } = useI18n()
+
+const featuresSection = computed(() => {
+  const raw = tm('featuresSection') as
+    | { title?: string; description?: string; features?: FeatureItem[] }
+    | undefined
+  return {
+    title: raw?.title ?? '',
+    description: raw?.description ?? '',
+    features: Array.isArray(raw?.features) ? raw.features : [],
+  }
+})
 </script>
 
 <template>
-  <section class="relative bg-brand-dark py-32 overflow-hidden border-t border-white/5" data-purpose="features">
+  <section class="relative bg-brand-dark py-20 overflow-hidden border-t border-white/5" data-purpose="features">
     <div class="mx-auto max-w-7xl px-6">
       <div class="mb-24 text-center">
         <h2 class="mb-6 text-4xl font-bold md:text-6xl">
-          {{ title }}
+          {{ featuresSection.title }}
         </h2>
         <p class="mx-auto max-w-xl text-brand-muted">
-          {{ description }}
+          {{ featuresSection.description }}
         </p>
       </div>
 
       <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
         <article
-          v-for="(feature, index) in features"
+          v-for="(feature, index) in featuresSection.features"
           :key="`${feature.title}-${index}`"
           class="group flex flex-col items-center rounded-3xl border border-white/5 bg-[#0a0a0a] p-10 text-center transition-all hover:border-white/10"
         >

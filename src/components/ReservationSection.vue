@@ -1,35 +1,46 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 
-type ProductOption = {
+export type ProductOption = {
   label: string
   value: string
 }
 
-const props = withDefaults(
-  defineProps<{
-    eyebrow?: string
-    title?: string
-    description?: string
-    statusText?: string
-    locationText?: string
-    productOptions?: ProductOption[]
-  }>(),
-  {
-    eyebrow: 'Limited Inventory',
-    title: 'Secure Your Unit.',
-    description:
-      'The next batch of Aura Pro peripherals is entering final testing. Join the priority reservation list to guarantee your hardware before public release.',
-    statusText: 'Production Phase 4',
-    locationText: 'Tokyo Labs',
-    productOptions: () => [
-      { label: 'Aura Pro Wireless (Magnesium)', value: 'aura-pro-mouse' },
-      { label: 'Core 65 Mechanical Keyboard', value: 'core-keyboard' },
-      { label: 'Sonic Hi-Res Audio Interface', value: 'sonic-audio' },
-      { label: 'Complete Elite Ecosystem Kit', value: 'full-kit' },
-    ],
-  },
-)
+type ReservationSectionData = {
+  eyebrow: string
+  title: string
+  description: string
+  statusText: string
+  locationText: string
+  titleText: string
+  emailText: string
+  hardwareText: string
+  selectText: string
+  submitText: string
+  termsText: string
+  productOptions: ProductOption[]
+}
+
+const { tm } = useI18n()
+
+const reservationSection = computed<ReservationSectionData>(() => {
+  const raw = tm('reservationSection') as Partial<ReservationSectionData> | undefined
+  return {
+    eyebrow: raw?.eyebrow ?? '',
+    title: raw?.title ?? '',
+    description: raw?.description ?? '',
+    statusText: raw?.statusText ?? '',
+    locationText: raw?.locationText ?? '',
+    titleText: raw?.titleText ?? 'Full Name',
+    emailText: raw?.emailText ?? 'Work Email',
+    hardwareText: raw?.hardwareText ?? 'Hardware Selection',
+    selectText: raw?.selectText ?? 'Select a product',
+    submitText: raw?.submitText ?? 'Reserve Now',
+    termsText: raw?.termsText ?? '',
+    productOptions: Array.isArray(raw?.productOptions) ? raw.productOptions : [],
+  }
+})
 
 const emit = defineEmits<{
   submit: [
@@ -57,7 +68,7 @@ function handleSubmit() {
 </script>
 
 <template>
-  <section class="relative overflow-hidden border-t border-white/5 bg-brand-dark py-32">
+  <section class="relative overflow-hidden border-t border-white/5 bg-brand-dark py-20">
     <div class="shader-bg opacity-20">
       <div class="shader-arc"></div>
     </div>
@@ -68,15 +79,15 @@ function handleSubmit() {
           <span
             class="mb-4 block text-[10px] font-bold uppercase tracking-[0.4em] text-blue-500"
           >
-            {{ eyebrow }}
+            {{ reservationSection.eyebrow }}
           </span>
 
           <h2 class="mb-6 text-4xl font-bold md:text-5xl">
-            {{ title }}
+            {{ reservationSection.title }}
           </h2>
 
           <p class="mb-8 text-lg leading-relaxed text-brand-muted">
-            {{ description }}
+            {{ reservationSection.description }}
           </p>
 
           <div
@@ -84,12 +95,12 @@ function handleSubmit() {
           >
             <span class="flex items-center gap-2">
               <span class="h-1.5 w-1.5 rounded-full bg-green-500"></span>
-              {{ statusText }}
+              {{ reservationSection.statusText }}
             </span>
 
             <span class="h-1 w-1 rounded-full bg-white/20"></span>
 
-            <span>{{ locationText }}</span>
+            <span>{{ reservationSection.locationText }}</span>
           </div>
         </div>
 
@@ -100,7 +111,7 @@ function handleSubmit() {
                 for="name"
                 class="ml-1 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-muted"
               >
-                Full Name
+                {{ reservationSection.titleText }}
               </label>
 
               <input
@@ -118,7 +129,7 @@ function handleSubmit() {
                 for="email"
                 class="ml-1 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-muted"
               >
-                Work Email
+                {{ reservationSection.emailText }}
               </label>
 
               <input
@@ -136,7 +147,7 @@ function handleSubmit() {
                 for="product"
                 class="ml-1 text-[10px] font-bold uppercase tracking-[0.2em] text-brand-muted"
               >
-                Hardware Selection
+                {{ reservationSection.hardwareText }}
               </label>
 
               <div class="relative">
@@ -147,13 +158,14 @@ function handleSubmit() {
                   class="sleek-input block w-full cursor-pointer appearance-none rounded-xl px-5 py-4 text-sm text-white outline-none focus:ring-0"
                 >
                   <option disabled value="">
-                    Select a product
+                    {{ reservationSection.selectText }}
                   </option>
 
                   <option
-                    v-for="option in productOptions"
+                    v-for="option in reservationSection.productOptions"
                     :key="option.value"
                     :value="option.value"
+                    class="text-black"
                   >
                     {{ option.label }}
                   </option>
@@ -171,14 +183,13 @@ function handleSubmit() {
               type="submit"
               class="text-black mt-4 w-full rounded-xl bg-white px-10 py-5 text-xs font-bold uppercase tracking-[0.2em] shadow-xl shadow-white/5 transition-all hover:bg-neutral-200 hover:cursor-pointer hover:text-black"
             >
-              Reserve Now
+              {{ reservationSection.submitText }}
             </button>
 
             <p
               class="text-brand-muted text-center text-[9px] uppercase tracking-widest leading-loose"
             >
-              By reserving, you agree to our priority access terms.<br />
-              No payment required today.
+              {{ reservationSection.termsText }}
             </p>
           </form>
         </div>
