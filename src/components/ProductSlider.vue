@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { TresCanvas } from '@tresjs/core'
-import { OrbitControls, useGLTF } from '@tresjs/cientos'
-import { computed, ref } from 'vue'
+import { computed, defineAsyncComponent, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import SpecsModal from './SpecsModal.vue'
+
+import LazyProductModelCanvas from '@/components/ui/LazyProductModelCanvas.vue'
 
 const { tm } = useI18n()
+
+const SpecsModal = defineAsyncComponent(() => import('./SpecsModal.vue'))
 
 export type SceneConfig = {
   cameraPosition?: [number, number, number]
@@ -103,9 +104,7 @@ const modelUrl = computed(() => {
   return new URL(`../assets/models/${src}`, import.meta.url).href
 })
 
-const { state: model } = useGLTF(modelUrl)
-
-const sceneConfig = computed(() => {
+const sceneConfig = computed<Required<SceneConfig>>(() => {
   const slideScene = currentSlide.value?.scene
   if (!slideScene) return DEFAULT_SCENE
   return {
@@ -127,17 +126,48 @@ const sceneConfig = computed(() => {
   }
 })
 
+const modelViewportRef = ref<HTMLElement | null>(null)
+const isModelInView = ref(false)
+const isModelRequested = ref(false)
+let intersectionObserver: IntersectionObserver | null = null
+
+onMounted(() => {
+  if (!modelViewportRef.value) return
+
+  intersectionObserver = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0]
+      if (entry?.isIntersecting) {
+        isModelInView.value = true
+        intersectionObserver?.disconnect()
+        intersectionObserver = null
+      }
+    },
+    { threshold: 0.15, rootMargin: '200px' },
+  )
+
+  intersectionObserver.observe(modelViewportRef.value)
+})
+
+onBeforeUnmount(() => {
+  intersectionObserver?.disconnect()
+  intersectionObserver = null
+})
+
 function nextSlide() {
+  isModelRequested.value = true
   currentIndex.value =
     currentIndex.value === slides.value.length - 1 ? 0 : currentIndex.value + 1
 }
 
 function prevSlide() {
+  isModelRequested.value = true
   currentIndex.value =
     currentIndex.value === 0 ? slides.value.length - 1 : currentIndex.value - 1
 }
 
 function goToSlide(index: number) {
+  isModelRequested.value = true
   currentIndex.value = index
 }
 
@@ -233,26 +263,20 @@ function handleSpecsClick() {
 
           <div class="relative w-full lg:w-1/2">
             <div
-              :key="currentSlide.id"
+              ref="modelViewportRef"
               class="relative z-10 md:h-[700px] h-[300px] overflow-hidden rounded-[2.5rem]"
             >
-              <TresCanvas clear-color="#050505">
-                <TresPerspectiveCamera :position="sceneConfig.cameraPosition" />
-                <TresAmbientLight :intensity="sceneConfig.ambientIntensity" />
-                <TresDirectionalLight
-                  v-for="(light, i) in sceneConfig.directionalLights"
-                  :key="i"
-                  :position="light.position"
-                  :intensity="light.intensity"
-                />
-                <primitive v-if="model?.scene" :object="model.scene" />
-                <OrbitControls
-                  :enable-damping="sceneConfig.orbit.enableDamping"
-                  :damping-factor="sceneConfig.orbit.dampingFactor"
-                  :auto-rotate="sceneConfig.orbit.autoRotate"
-                  :auto-rotate-speed="sceneConfig.orbit.autoRotateSpeed"
-                />
-              </TresCanvas>
+              <LazyProductModelCanvas
+                v-if="(isModelInView || isModelRequested) && modelUrl"
+                :key="currentSlide.id"
+                :model-url="modelUrl"
+                :scene-config="sceneConfig"
+              />
+              <div
+                v-else
+                class="h-full w-full bg-[#050505]"
+                aria-hidden="true"
+              />
             </div>
           </div>
         </div>
@@ -260,6 +284,7 @@ function handleSpecsClick() {
     </div>
 
     <SpecsModal
+      v-if="specsModalOpen"
       :open="specsModalOpen"
       :title="(currentSlide?.specs?.title ?? (currentSlide?.title ?? '').replace(/\n/g, ' ')) || 'Specifications'"
       :subtitle="currentSlide?.specs?.subtitle ?? currentSlide?.eyebrow ?? 'Technical Data'"
