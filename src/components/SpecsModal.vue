@@ -77,7 +77,7 @@ function handleOverlayClick() {
                 class="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-colors hover:bg-white/10 hover:cursor-pointer"
                 @click="closeModal"
               >
-                <span class="material-symbols-outlined">close</span>
+                <span class="material-symbols-outlined notranslate" translate="no">close</span>
               </button>
             </div>
 

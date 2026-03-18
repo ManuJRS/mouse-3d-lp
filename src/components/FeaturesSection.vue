@@ -48,7 +48,7 @@ const featuresSection = computed(() => {
               style="background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 10px 10px;"
             ></div>
 
-            <span class="material-symbols-outlined relative z-10 text-3xl">
+            <span class="material-symbols-outlined notranslate relative z-10 text-3xl" translate="no">
               {{ feature.icon }}
             </span>
           </div>
