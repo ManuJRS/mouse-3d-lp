@@ -151,7 +151,7 @@ function handleSpecsClick() {
 </script>
 
 <template>
-  <section class="overflow-hidden bg-[#050505] py-20 md:py-32">
+  <section id="products" class="overflow-hidden bg-[#050505] py-20">
     <div class="mx-auto max-w-7xl px-6">
       <div class="mb-10 flex items-center justify-between gap-4">
         <div class="flex items-center gap-3">
@@ -192,7 +192,7 @@ function handleSpecsClick() {
         >
           <div class="w-full lg:w-1/2">
             <span
-              class="mb-6 block text-[10px] font-bold uppercase tracking-[0.4em] text-blue-500"
+              class="mb-6 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#003366]"
             >
               {{ currentSlide.eyebrow }}
             </span>

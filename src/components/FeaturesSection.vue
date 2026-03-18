@@ -23,7 +23,7 @@ const featuresSection = computed(() => {
 </script>
 
 <template>
-  <section class="relative bg-brand-dark py-20 overflow-hidden border-t border-white/5" data-purpose="features">
+  <section id="performance" class="relative bg-brand-dark py-20 overflow-hidden border-t border-white/5" data-purpose="features">
     <div class="mx-auto max-w-7xl px-6">
       <div class="mb-24 text-center">
         <h2 class="mb-6 text-4xl font-bold md:text-6xl">
@@ -38,7 +38,7 @@ const featuresSection = computed(() => {
         <article
           v-for="(feature, index) in featuresSection.features"
           :key="`${feature.title}-${index}`"
-          class="group flex flex-col items-center rounded-3xl border border-white/5 bg-[#0a0a0a] p-10 text-center transition-all hover:border-white/10"
+          class="group flex flex-col items-center rounded-3xl border border-white/5 bg-[#0a0a0a] p-10 text-center transition-all hover:border-white/10"q
         >
           <div
             class="relative mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5 transition-colors group-hover:bg-white/10"
