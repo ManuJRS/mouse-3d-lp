@@ -1,20 +1,25 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
+const emit = defineEmits<{
+  shopCollection: []
+  philosophy: []
+}>()
+
 function handleShopCollection() {
-  console.log('Shop The Collection')
+  emit('shopCollection')
 }
 
 function handlePhilosophy() {
-  console.log('The Philosophy')
-}
-
-function handleMenu() {
-  console.log('Open menu')
+  emit('philosophy')
 }
 </script>
 
 <template>
   <section
-    class="relative flex h-[calc(60vh)] items-center justify-center overflow-hidden pt-20"
+    class="relative flex h-[calc(80vh)] items-center justify-center overflow-hidden pt-20"
     data-purpose="hero"
   >
     <div class="shader-bg">
@@ -25,14 +30,13 @@ function handleMenu() {
       <h1
         class="gradient-text mb-8 text-6xl font-bold leading-[0.9] tracking-tight md:text-[120px]"
       >
-        Elevate Your Play.
+        {{ t('hero.title') }}
       </h1>
 
       <p
         class="mx-auto mb-12 max-w-2xl text-lg leading-relaxed text-brand-muted md:text-xl"
       >
-        Professional-grade peripherals engineered for absolute precision and zero distraction.
-        Minimalist by design, uncompromising by nature.
+        {{ t('hero.description') }}
       </p>
 
       <div class="flex flex-col items-center justify-center gap-6 sm:flex-row">
@@ -41,15 +45,15 @@ function handleMenu() {
           class="w-full rounded-sm bg-white px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] text-black hover:cursor-pointer transition-all hover:bg-neutral-200 sm:w-auto"
           @click="handleShopCollection"
         >
-          Shop The Collection
+          {{ t('hero.primaryButtonText') }}
         </button>
 
         <button
           type="button"
-          class="w-full rounded-sm border border-white/10 px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all hover:bg-white/5 sm:w-auto"
+          class="w-full rounded-sm border border-white/10 px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] transition-all hover:bg-white/5 sm:w-auto hover:cursor-pointer"
           @click="handlePhilosophy"
         >
-          The Philosophy
+          {{ t('hero.secondaryButtonText') }}
         </button>
       </div>
     </div>
