@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n'
 type NavItem = {
   key: string
   href: string
+  label?: string
 }
 
 type LanguageItem = {
