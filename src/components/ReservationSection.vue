@@ -68,7 +68,7 @@ function handleSubmit() {
 </script>
 
 <template>
-  <section class="relative overflow-hidden border-t border-white/5 bg-brand-dark py-20">
+  <section id="reservation" class="relative overflow-hidden border-t border-white/5 bg-brand-dark py-20">
     <div class="shader-bg opacity-20">
       <div class="shader-arc"></div>
     </div>
@@ -77,7 +77,7 @@ function handleSubmit() {
       <div class="grid items-center gap-16 lg:grid-cols-2">
         <div>
           <span
-            class="mb-4 block text-[10px] font-bold uppercase tracking-[0.4em] text-blue-500"
+            class="mb-4 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#003366]"
           >
             {{ reservationSection.eyebrow }}
           </span>
@@ -182,7 +182,8 @@ function handleSubmit() {
 
             <button
               type="submit"
-              class="text-black mt-4 w-full rounded-xl bg-white px-10 py-5 text-xs font-bold uppercase tracking-[0.2em] shadow-xl shadow-white/5 transition-all hover:bg-neutral-200 hover:cursor-pointer hover:text-black"
+              disabled
+              class="w-full rounded-sm bg-white px-10 py-4 text-xs font-bold uppercase tracking-[0.2em] text-black transition-all w-auto opacity-60 cursor-not-allowed"
             >
               {{ reservationSection.submitText }}
             </button>

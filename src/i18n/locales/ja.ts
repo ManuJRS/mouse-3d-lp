@@ -1,4 +1,10 @@
 export default {
+    nav: {
+      products: '製品',
+      performance: 'パフォーマンス',
+      countdown: 'カウントダウン',
+      reservation: '予約',
+    },
     hero: {
       title: '精度を再定義する。',
       description:
@@ -166,6 +172,12 @@ export default {
           },
         ],
       },
+      btnModal: {
+        text: '詳細を閉じる',
+      },
+      btnExplore: {
+        text: 'デザインを見る',
+      },
       countdownSection: {
         eyebrow: 'イベントホライズン',
         title: 'まもなくローンチ。',
@@ -194,5 +206,8 @@ export default {
           { label: 'Aura Pro Wireless', value: 'aura-pro-wireless' },
           { label: 'VoidMesh S1', value: 'voidmesh-s1' },
         ],
+      },
+      footer: {
+        copyright: '© 2025 Aura Gaming Tech。東京で設計。',
       }
   }

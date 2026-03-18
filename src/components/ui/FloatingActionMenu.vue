@@ -1,20 +1,30 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Plus } from 'lucide-vue-next'
 
 type MenuOption = {
-  label: string
-  onClick: () => void
+  key?: string
+  label?: string
+  href: string
   icon?: any
 }
 
+const { t } = useI18n()
+
 const props = withDefaults(
   defineProps<{
-    options: MenuOption[]
+    options?: MenuOption[]
     className?: string
   }>(),
   {
     className: '',
+    options: () => [
+      { key: 'products', href: '#products' },
+      { key: 'performance', href: '#performance' },
+      { key: 'countdown', href: '#countdown' },
+      { key: 'reservation', href: '#reservation' },
+    ],
   },
 )
 
@@ -30,7 +40,7 @@ function closeMenu() {
 }
 
 function handleOptionClick(option: MenuOption) {
-  option.onClick()
+  window.location.href = option.href
   closeMenu()
 }
 
@@ -48,6 +58,8 @@ function handleEscape(event: KeyboardEvent) {
   }
 }
 
+
+
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
   document.addEventListener('keydown', handleEscape)
@@ -62,7 +74,7 @@ onBeforeUnmount(() => {
 <template>
   <div
     ref="rootRef"
-    :class="['fixed bottom-8 right-8 z-[80]', className]"
+    :class="['fixed bottom-8 right-8 z-[80] lg:hidden', className]"
   >
     <button
       type="button"
@@ -87,7 +99,7 @@ onBeforeUnmount(() => {
         >
           <button
             v-for="(option, index) in options"
-            :key="`${option.label}-${index}`"
+            :key="`${option.key ?? option.label ?? index}`"
             type="button"
             class="flex items-center gap-2 rounded-xl bg-[#11111198] px-3 py-2 text-sm text-white shadow-[0_0_20px_rgba(0,0,0,0.2)] backdrop-blur-sm transition-colors duration-300 hover:bg-[#111111d1]"
             @click="handleOptionClick(option)"
@@ -97,7 +109,7 @@ onBeforeUnmount(() => {
               v-if="option.icon"
               class="h-4 w-4"
             />
-            <span>{{ option.label }}</span>
+            <span>{{ option.key ? t(`nav.${option.key}`) : option.label }}</span>
           </button>
         </TransitionGroup>
       </div>

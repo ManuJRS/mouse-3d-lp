@@ -102,10 +102,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <section class="overflow-hidden border-t border-white/5 bg-brand-dark py-20">
+  <section id="countdown" class="overflow-hidden border-t border-white/5 bg-brand-dark py-20">
     <div class="mx-auto max-w-7xl px-6 text-center">
       <span
-        class="mb-6 block text-[10px] font-bold uppercase tracking-[0.4em] text-blue-500"
+        class="mb-6 block text-[10px] font-bold uppercase tracking-[0.4em] text-[#003366]"
       >
         {{ countdownSection.eyebrow }}
       </span>

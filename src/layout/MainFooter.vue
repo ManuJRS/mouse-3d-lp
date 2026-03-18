@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+
+const { tm } = useI18n()
+
 type FooterLink = {
   label: string
   href: string
@@ -59,9 +63,9 @@ const props = withDefaults(
       },
     ],
     bottomLinks: () => [
-      { label: 'Privacy', href: '#' },
-      { label: 'Terms', href: '#' },
-      { label: 'Cookies', href: '#' },
+      { label: '', href: '#' },
+      { label: '', href: '#' },
+      { label: '', href: '#' },
     ],
     copyright: '© 2025 Aura Gaming Tech. Engineered in Tokyo.',
   },
@@ -87,7 +91,7 @@ function handleLinkClick(link: FooterLink) {
       <div
         class="flex flex-col items-center justify-between border-t border-white/5 pt-10 text-[9px] uppercase tracking-[0.3em] text-brand-muted md:flex-row"
       >
-        <p class="text-center">{{ copyright }}</p>
+        <p class="text-center">{{ tm('footer.copyright') }}</p>
         <div class="mt-6 flex gap-8 md:mt-0">
           <a
             v-for="link in bottomLinks"

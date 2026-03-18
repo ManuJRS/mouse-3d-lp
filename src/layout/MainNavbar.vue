@@ -3,7 +3,7 @@ import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 type NavItem = {
-  label: string
+  key: string
   href: string
 }
 
@@ -12,7 +12,7 @@ type LanguageItem = {
   label: string
 }
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 const props = withDefaults(
   defineProps<{
@@ -23,14 +23,14 @@ const props = withDefaults(
   {
     brand: 'AURA',
     navItems: () => [
-      { label: 'Mice', href: '#' },
-      { label: 'Keyboards', href: '#' },
-      { label: 'Audio', href: '#' },
-      { label: 'Ecosystem', href: '#' },
+      { key: 'products', href: '#products' },
+      { key: 'performance', href: '#performance' },
+      { key: 'countdown', href: '#countdown' },
+      { key: 'reservation', href: '#reservation' },
     ],
     languages: () => [
-      { code: 'en', label: 'English' },
       { code: 'ja', label: '日本語' },
+      { code: 'en', label: 'English' },
     ],
   },
 )
@@ -106,23 +106,28 @@ onBeforeUnmount(() => {
         data-purpose="brand-logo"
         @click="handleBrandClick"
       >
-        <div class="flex h-8 w-8 items-center justify-center rounded-sm bg-white">
-          <div class="h-4 w-4 rotate-45 transform bg-brand-dark"></div>
-        </div>
-        <span class="text-xl font-bold tracking-tighter">
-          {{ brand }}
-        </span>
+      <svg width="200" height="40" viewBox="0 0 250 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="25" fill="#003366" />
+        <path d="M10 22H50M5 30H55M10 38H50" stroke="white" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="45" cy="15" r="5" fill="#FF0033" />
+        
+        <text x="70" y="35" font-family="Arial, sans-serif" font-weight="800" font-size="24" fill="#1A1A1A">AURA</text>
+        <text x="145" y="35" font-family="Arial, sans-serif" font-weight="300" font-size="24" fill="#003366">TOKYO</text>
+        
+        <text x="72" y="52" font-family="Arial, sans-serif" font-size="8" letter-spacing="2" fill="#666666">PRECISION & FUTURE</text>
+      </svg>
+
       </button>
 
       <div class="hidden items-center gap-10 text-[13px] font-medium tracking-wide text-brand-muted md:flex">
         <a
           v-for="item in navItems"
-          :key="item.label"
+          :key="item.key"
           :href="item.href"
           class="transition-colors hover:text-white"
           @click="handleNavClick(item)"
         >
-          {{ item.label }}
+          {{ t(`nav.${item.key}`) }}
         </a>
       </div>
 
