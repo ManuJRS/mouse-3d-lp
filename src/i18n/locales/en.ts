@@ -1,4 +1,10 @@
 export default {
+    nav: {
+      products: 'Products',
+      performance: 'Performance',
+      countdown: 'Countdown',
+      reservation: 'Reservation',
+    },
     hero: {
       title: 'Redefine Precision.',
       description:
@@ -166,6 +172,12 @@ export default {
         },
       ],
     },
+    btnModal: {
+      text: 'Close Details',
+    },
+    btnExplore: {
+      text: 'Explore Design',
+    },
     countdownSection: {
       eyebrow: 'Event Horizon',
       title: 'Launch Impending.',
@@ -194,5 +206,8 @@ export default {
         { label: 'Aura Pro Wireless', value: 'aura-pro-wireless' },
         { label: 'VoidMesh S1', value: 'voidmesh-s1' },
       ],
+    },
+    footer: {
+      copyright: '© 2025 Aura Gaming Tech. Engineered in Tokyo.',
     }
   }

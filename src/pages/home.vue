@@ -8,26 +8,6 @@ import ReservationSection from '@/components/ReservationSection.vue'
 import MainFooter from '@/layout/MainFooter.vue'
 import FloatingActionMenu from '@/components/ui/FloatingActionMenu.vue'
 import type { Slide, SlideScene } from '@/components/ProductSlider.vue'
-import { User, Settings, LogOut } from 'lucide-vue-next'
-
-const menuOptions = [
-  {
-    label: 'Account',
-    icon: User,
-    onClick: () => console.log('Account clicked'),
-  },
-  {
-    label: 'Settings',
-    icon: Settings,
-    onClick: () => console.log('Settings clicked'),
-  },
-  {
-    label: 'Logout',
-    icon: LogOut,
-    onClick: () => console.log('Logout clicked'),
-  },
-]
-
 
 const productSlideScenes: SlideScene[] = [
   {
@@ -115,5 +95,5 @@ function handleReservationSubmit(payload: {
   <CountdownSection :days-from-now="8" />
   <ReservationSection @submit="handleReservationSubmit" />
   <MainFooter />
-  <FloatingActionMenu :options="menuOptions" />
+  <FloatingActionMenu />
 </template>
