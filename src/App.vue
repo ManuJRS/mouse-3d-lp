@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import router from '@/router'
 import MainNavbar from '@/layout/MainNavbar.vue'
-function handleLanguageChange(language: { code: string; label: string }) {
-  console.log('Idioma seleccionado:', language)
+function handleLanguageChange(_language: { code: string; label: string }) {
+  // TODO: integrar cambio de idioma / navegación
 }
 
-function handleNavClick(item: { key?: string; label?: string; href: string }) {
-  console.log('Nav item:', item)
+function handleNavClick(_item: { key?: string; label?: string; href: string }) {
+  // TODO: navegación o tracking
 }
 
 function handleBrandClick() {
-  console.log('Brand click')
+  // TODO: scroll to top o navegación
 }
 </script>
 
